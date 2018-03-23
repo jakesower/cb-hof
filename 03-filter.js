@@ -1,4 +1,4 @@
-const assertEqual = require('../lib/assert-equal');
+const assertEqual = require('./lib/assert-equal');
 
 /**
  * Filter is much like map, except that takes a list and a predicate function

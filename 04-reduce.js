@@ -1,4 +1,4 @@
-const assertEqual = require('../lib/assert-equal');
+const assertEqual = require('./lib/assert-equal');
 
 /**
  * Reduce is the most powerful of the higher order functions. Almost all of the

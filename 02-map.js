@@ -1,4 +1,4 @@
-const assertEqual = require('../lib/assert-equal');
+const assertEqual = require('./lib/assert-equal');
 
 /*
  * Example 1:

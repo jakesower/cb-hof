@@ -1,17 +1,12 @@
-const assertEqual = require('../lib/assert-equal');
-const map = require('./functions').map;
+const assertEqual = require('./lib/assert-equal');
 
 /*
  * Example 1:
  * Extend the doubleList and tripleList functions to take in a second number to
  * use to multiply the list items by.
  */
-/**
- * @param {number[]} list
- * @param {number} factor
- * @returns {number[]}
- */
-function multiplyList(list, factor) {
+
+ function multiplyList(list, factor) {
   let output = [];
   for (let i = 0, l = list.length; i < l; i += 1) {
     let multiplied = list[i] * factor;
