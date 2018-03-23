@@ -70,14 +70,7 @@ assertEqual(
  */
 
 function timeFunction(fn) {
-  return function () {
-    const startTime = Date.now();
-    const value = fn.apply(null, arguments);
-    return {
-      value,
-      time: Date.now() - startTime
-    };
-  };
+
 }
 
 

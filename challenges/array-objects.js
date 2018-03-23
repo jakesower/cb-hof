@@ -135,7 +135,7 @@ const correctOutput3 = 'GBBBGAAGBBG';
 
 // Direct approach (please try doing this yourself first)
 function showVictoryLetters1() {
-  // ???
+
 }
 
 // Functional approach 1
