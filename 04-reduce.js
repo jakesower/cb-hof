@@ -59,4 +59,4 @@ assertEqual(
 );
 
 
-// BONUS (difficult): Implement map and filter using reduce.
+// BONUS: Implement map and filter using reduce.
