@@ -42,7 +42,7 @@ assertEqual(
 
 
 /*
- * Example 4:
+ * Example 3:
  * Pull the function out from the boring stuff with map
  */
 
@@ -67,6 +67,3 @@ assertEqual(
   map(['so', 'cool!'], exclaim),
   ['so!', 'cool!!']
 );
-
-
-module.exports = map;
