@@ -1,7 +1,7 @@
 const assertEqual = require('./lib/assert-equal');
 
 /**
- * Reduce is the most powerful of the higher order functions. Almost all of the
+ * Reduce is the most powerful of the higher order functions. All of the other
  * other HOFs can be implemented using reduce.
  *
  * Examples:

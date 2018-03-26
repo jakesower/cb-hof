@@ -56,7 +56,7 @@ assertEqual(
  *
  * JS language hints:
  *
- * Date.now() will return the current time in milliseconds
+ * Date.now() will return the current time in epoch milliseconds
  * Calling fn.apply(null, arguments) inside a (non-arrow) function will call fn
  * with whatever arguments were passed to the containing function. Example:
  *
