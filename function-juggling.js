@@ -56,8 +56,8 @@ const isGoodGuy = function (person) {
 };
 
 const metroStation = {
-  // isGoodGuy is executed here; rather, it's assigned to an attribute within
-  // the new object
+  // isGoodGuy is not executed here; rather, it's assigned to an attribute
+  // within the new object
   isAllowedAccess: isGoodGuy,
 };
 
