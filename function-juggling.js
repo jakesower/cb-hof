@@ -29,9 +29,7 @@ const martin = {
   name: 'Martin the Many-Faced',
   specialty: 'Impersonation',
   goodGuy: false,
-  perform: function (target) {
-    return target;
-  }
+  perform: target => target, // a function that returns its argument
 };
 
 const ursula = {
