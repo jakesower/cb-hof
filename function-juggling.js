@@ -16,8 +16,6 @@ function bomb() {
  */
 const rita = {
   name: 'Rita the Wrench',
-  hideout: 'Autohaus',
-  cover: 'Mechanic',
   specialty: 'Bomb Making',
   goodGuy: false,
   perform: function () {
@@ -29,8 +27,6 @@ const rita = {
 
 const martin = {
   name: 'Martin the Many-Faced',
-  hideout: "Walgreen's",
-  cover: 'Pharmacist',
   specialty: 'Impersonation',
   goodGuy: false,
   perform: function (target) {
