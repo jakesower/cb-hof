@@ -164,7 +164,7 @@ function unnest(pairs) {      // ⭐ Important function! ⭐
   // This one may be challenging to conceptualize, but it can be represented
   // with append and another higher order function you're familiar with
   // Example: [[1, 2], [3, 4]] -> [1, 2, 3, 4]
-  // Example: [[[1, 2], [3, 4], 5]] -> [[1, 2], [3, 4], 5]
+  // Example: [[[1, 2], [3, 4], 5], [6]] -> [[1, 2], [3, 4], 5, 6]
 
 }
 

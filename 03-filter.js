@@ -6,7 +6,7 @@ const assertEqual = require('./lib/assert-equal');
  * which the predicate holds.
  */
 
-function filter(list, predicate) {
+function filter(list, predicateFn) {
 
 }
 

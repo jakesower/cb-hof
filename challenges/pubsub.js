@@ -123,7 +123,8 @@ assertEqual(
  * Challenge 2: Singular Value PubSub
  * Create a function called singularPubsub that listens for a single publish
  * event, remembers the result, transmits it to current subscribers, then
- * replays it to new subscribers just like in the hot pubsub.
+ * replays it to new subscribers just like in the hot pubsub. Messages after
+ * the first should be ignored.
  */
 
 function singularPubsub() {

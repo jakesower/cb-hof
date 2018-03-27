@@ -54,9 +54,19 @@ assertEqual(
 );
 
 assertEqual(
-  reduce([1, 2, 4, 3], 10, maximum),
-  10
+  reduce([1, 2, 4, 3], 15, maximum),
+  15
 );
+
+
+// Implement a test that takes a list of letters and returns the letters
+// concatenated together. Use reduce to do so.
+// Example: ['a', 'b', 'c'] -> 'abc'
+assertEqual(
+  false,
+  true
+);
+
 
 
 // BONUS: Implement map and filter using reduce.
