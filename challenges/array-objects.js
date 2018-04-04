@@ -1,17 +1,12 @@
 const assertEqual = require('../lib/assert-equal');
 
 /**
- * Functions do best when dealing with simple data structures, specifically
- * strings, numbers, booleans, null, arrays, and POJOs (plain old JavaScript
- * objects). This section covers the use of functions to manipulate these
- * common structures.
+ * These are the same problems as from Day 1. However, in this exercise I have
+ * added a few guiding functions to illustrate some more functional approaches
+ * to solving them. If you want to get the most out of these challenges, the
+ * most important rule is:
  *
- * An advantage of this approach in contrast to traditional OO is that the
- * same functions can be applied across a large domain of these simpler data
- * structures, rather than conforming to any given object's specific interface.
- *
- * We'll be using a subset of team data from the FIFA Men's World Cup to derive
- * and play with these functions.
+ * Don't use any loops! Higher order functions only!
  */
 
 const teamData = {
@@ -38,25 +33,6 @@ const teamData = {
  * name of a player is unknown, put ¯\_(ツ)_/¯.
  */
 
-// Direct approach
-function getStar1(team) {
-  // ??? please implement this
-}
-
-assertEqual(
-  getStar1('argentina'),
-  { firstName: 'Lionel', lastName: 'Messi' },
-  "getStar1('argentina')"
-);
-assertEqual(
-  getStar1('brazil'),
-  { firstName: 'Neymar', lastName: '¯\_(ツ)_/¯' },
-  "getStar1('brazil')"
-);
-
-
-
-// Defaulting function approach
 function getStarAttr(team) {
   return teamData[team].star;
 }
@@ -67,18 +43,18 @@ function withDefaults(defaults, fn) {
   }
 }
 
-const getStar2 = withDefaults({ lastName: '¯\_(ツ)_/¯' }, getStarAttr);
+function getStar(country) {
+  // implement in terms of the above two functions
+}
 
 // Test it:
 assertEqual(
-  getStar2('argentina'),
-  { firstName: 'Lionel', lastName: 'Messi' },
-  "getStar2('argentina')"
+  getStar('argentina'),
+  { firstName: 'Lionel', lastName: 'Messi' }
 );
 assertEqual(
-  getStar2('brazil'),
-  { firstName: 'Neymar', lastName: '¯\_(ツ)_/¯' },
-  "getStar2('brazil')"
+  getStar('brazil'),
+  { firstName: 'Neymar', lastName: '¯\_(ツ)_/¯' }
 );
 
 
@@ -88,42 +64,17 @@ assertEqual(
  * they have, sorted from most titles to fewest.
  */
 
-// Direct approach (please try doing this yourself first)
-function showTitles1() {
+function showTitles() {
   // ???
 }
 
-// Functional approach
-function sortBy(list, fn) {     // ⭐ Important function! ⭐
-  // Take a binary function that returns a negative number if the first argument
-  // is less than the second, 0 if they're equal, and a positive number
-  // otherwise. This function should return a sorted list based on the results
-  // of that function.
-}
-
-function outputString(team) {
-  // Take a team and return a string according to the output.
-  // Example: Germany: 4 titles
-}
-
-function showTitles2() {
-  function sortingFunction(t1, t2) {
-    return t1.titles.length - t2.titles.length;
-  }
-  const sortedTeams = sortBy(teams, sortingFunction);
-  const output = sortedTeams.map(outputString);
-  return output;
-}
-
-// Test it
 const correctOutput2 = [
   'Brazil: 5 titles',
   'Germany: 4 titles',
   'Argentina: 2 titles',
 ];
 
-assertEqual(showTitles1(), correctOutput2);
-assertEqual(showTitles2(), correctOutput2);
+assertEqual(showTitles(), correctOutput2);
 
 
 /**
@@ -131,31 +82,43 @@ assertEqual(showTitles2(), correctOutput2);
  * by year of victory. The letter in the string is the first letter of the
  * country's name.
  */
-const correctOutput3 = 'GBBBGAAGBBG';
 
-// Direct approach (please try doing this yourself first)
-function showVictoryLetters1() {
+// some helper functions
 
-}
-
-// Functional approach 1
-function toLetterYearPair(team) {
-  // Create a pairs of letters and victory years.
-  // Example: argentina -> [['A', 1978], ['A', 1986]]
-}
-
+// Returns the values of an object
 function values(obj) {
-  // Returns the values of an object
   return Object.keys(obj).map(k => obj[k]);
 }
 
-function append(list1, list2) { // ⭐ Important function! ⭐
-  // Appends one list to another
+// Appends one list to another
+function append(list1, list2) {
   if (!Array.isArray(list1) || !Array.isArray(list2)) {
     throw 'both arguments must be a list!';
   }
 
   return list1.concat(list2);
+}
+
+// Like the built in `Array.prototype.sort`, but doesn't modify the incoming
+// list. Not the most efficient implementation, but it'll do.
+function sortBy(list, fn) {
+  if (list.length === 0) {
+    return [];
+  }
+
+  const [head, ...tail] = list;
+  const smaller = tail.filter(v => fn(v, head) <= 0);
+  const bigger = tail.filter(v => fn(v, head) > 0);
+
+  return sortBy(smaller, fn).concat([head]).concat(sortBy(bigger, fn));
+}
+
+const correctOutput3 = 'GBBBGAAGBBG';
+
+// Functional approach 1
+function toLetterYearPair(team) {
+  // Create a pairs of letters and victory years.
+  // Example: argentina -> [['A', 1978], ['A', 1986]]
 }
 
 function unnest(pairs) {      // ⭐ Important function! ⭐
@@ -168,10 +131,10 @@ function unnest(pairs) {      // ⭐ Important function! ⭐
 
 }
 
-function showVictoryLetters2() {
+function showVictoryLetters1() {
   const teamList = values(teamData);
   const pairs = teamList.map(toLetterYearPair);
-  // ??? (hint: use unnest and the sortBy function from challenge 2)
+  // ??? (hint: use unnest and the sortBy functions)
 }
 
 // Functional approach 2
@@ -179,11 +142,10 @@ function chain(list, fn) {     // ⭐ Important function! ⭐
   return unnest(list.map(fn));
 }
 
-function showVictoryLetters3() {
+function showVictoryLetters2() {
   // implement using chain and other functions
 }
 
 
 assertEqual(showVictoryLetters1(), correctOutput3);
 assertEqual(showVictoryLetters2(), correctOutput3);
-assertEqual(showVictoryLetters3(), correctOutput3);

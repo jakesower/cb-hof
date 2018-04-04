@@ -6,7 +6,7 @@ const assertEqual = require('./lib/assert-equal');
  * use to multiply the list items by.
  */
 
- function multiplyList(list, factor) {
+function multiplyList(list, factor) {
   let output = [];
   for (let i = 0, l = list.length; i < l; i += 1) {
     let multiplied = list[i] * factor;
@@ -22,10 +22,9 @@ assertEqual(
 );
 
 
-// How to handle this case with `map`?
 function makeMultiplier(factor) {
   return function (n) {
-    return factor * n;  // <-- factor is part of a closure
+    return factor * n;
   }
 }
 

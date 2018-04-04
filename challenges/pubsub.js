@@ -11,7 +11,8 @@ const assertEqual = require('../lib/assert-equal');
  */
 
 function pubsub() {
-  // listeners is only visible inside the function
+  // listeners is an array of functions to be called when a message is
+  // published
   let listeners = [];
 
   function subscribe(fn) {
@@ -33,10 +34,10 @@ function makeAdder() {
   let sum = 0;
 
   return {
-    listener: function (msg) {
+    getSum: () => sum,
+    add1: function (msg) {
       sum = sum + 1; // ignore the msg
     },
-    getSum: () => sum,
   }
 }
 
@@ -44,10 +45,10 @@ function makeAppender() {
   let messages = [];
 
   return {
-    listener: function (msg) {
+    messages,
+    appendMessage: function (msg) {
       messages.push(msg);
     },
-    getMessages: () => messages,
   };
 }
 
@@ -57,11 +58,11 @@ const adder = makeAdder();
 const appender = makeAppender();
 const adder2 = makeAdder();
 
-ps.subscribe(adder.listener);
+ps.subscribe(adder.add1);
 ps.publish('E.T.');
-ps.subscribe(appender.listener);
+ps.subscribe(appender.appendMessage);
 ps.publish('phone');
-ps.subscribe(adder2.listener);
+ps.subscribe(adder2.add1);
 ps.publish('home');
 
 assertEqual(
@@ -70,7 +71,7 @@ assertEqual(
 );
 
 assertEqual(
-  appender.getMessages(),
+  appender.messages,
   ['phone', 'home']
 );
 
@@ -96,11 +97,11 @@ const hotAdder = makeAdder();
 const hotAppender = makeAppender();
 const hotAdder2 = makeAdder();
 
-hotps.subscribe(hotAdder.listener);
+hotps.subscribe(hotAdder.add1);
 hotps.publish('E.T.');
-hotps.subscribe(hotAppender.listener);
+hotps.subscribe(hotAppender.appendMessage);
 hotps.publish('phone');
-hotps.subscribe(hotAdder2.listener);
+hotps.subscribe(hotAdder2.add1);
 hotps.publish('home');
 
 assertEqual(
@@ -109,7 +110,7 @@ assertEqual(
 );
 
 assertEqual(
-  hotAppender.getMessages(),
+  hotAppender.messages,
   ['E.T.', 'phone', 'home']
 );
 
@@ -137,12 +138,12 @@ const singAdder2 = makeAdder();
 const singAppender = makeAppender();
 const singAppender2 = makeAppender();
 
-singps.subscribe(singAdder.listener);
-singps.subscribe(singAppender.listener);
+singps.subscribe(singAdder.add1);
+singps.subscribe(singAppender.appendMessage);
 singps.publish('E.T.');
 singps.publish('phone');
-singps.subscribe(singAdder2.listener);
-singps.subscribe(singAppender2.listener);
+singps.subscribe(singAdder2.add1);
+singps.subscribe(singAppender2.appendMessage);
 singps.publish('home');
 
 assertEqual(
@@ -151,7 +152,7 @@ assertEqual(
 );
 
 assertEqual(
-  singAppender.getMessages(),
+  singAppender.messages,
   ['E.T.']
 );
 
@@ -161,6 +162,6 @@ assertEqual(
 );
 
 assertEqual(
-  singAppender2.getMessages(),
+  singAppender2.messages,
   ['E.T.']
 );
