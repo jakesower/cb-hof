@@ -50,11 +50,13 @@ function getStar(country) {
 // Test it:
 assertEqual(
   getStar('argentina'),
-  { firstName: 'Lionel', lastName: 'Messi' }
+  { firstName: 'Lionel', lastName: 'Messi' },
+  'Get Star 1'
 );
 assertEqual(
   getStar('brazil'),
-  { firstName: 'Neymar', lastName: '¯\_(ツ)_/¯' }
+  { firstName: 'Neymar', lastName: '¯\_(ツ)_/¯' },
+  'Get Star 2'
 );
 
 
@@ -74,7 +76,7 @@ const correctOutput2 = [
   'Argentina: 2 titles',
 ];
 
-assertEqual(showTitles(), correctOutput2);
+assertEqual(showTitles(), correctOutput2, 'Show Titles');
 
 
 /**
@@ -147,5 +149,5 @@ function showVictoryLetters2() {
 }
 
 
-assertEqual(showVictoryLetters1(), correctOutput3);
-assertEqual(showVictoryLetters2(), correctOutput3);
+assertEqual(showVictoryLetters1(), correctOutput3, 'Show Victory Letters 1');
+assertEqual(showVictoryLetters2(), correctOutput3, 'Show Victory Letters 2');

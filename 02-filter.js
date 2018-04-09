@@ -15,13 +15,15 @@ function filter(list, predicateFn) {
 const isEven = x => x % 2 === 0;
 assertEqual(
   filter([1, 2, 3, 4, 5], isEven),
-  [2, 4]
+  [2, 4],
+  'Filter 1'
 );
 
 const lessThan3 = x => x < 3;
 assertEqual(
   filter([1, 2, 3, 4, 5], lessThan3),
-  [1, 2]
+  [1, 2],
+  'Filter 2'
 );
 
 
@@ -48,12 +50,14 @@ function isAtLeast21(person) {
 
 assertEqual(
   filter(people, isAtLeast18),
-  [anita, chloe]
+  [anita, chloe],
+  'Filter 3'
 );
 
 assertEqual(
   filter(people, isAtLeast21),
-  [chloe]
+  [chloe],
+  'Filter 4'
 );
 
 

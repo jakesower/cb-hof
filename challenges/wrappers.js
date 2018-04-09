@@ -37,11 +37,13 @@ function testCallback(err, value) {
 const wrappedCallbacks = wrapLambdaCallback(testCallback);
 assertEqual(
   wrappedCallbacks.succeed('yay'),
-  'succeeded with value: yay'
+  'succeeded with value: yay',
+  'Wrapped Callbacks 1'
 );
 assertEqual(
   wrappedCallbacks.fail('uh oh'),
-  'failed with value: uh oh'
+  'failed with value: uh oh',
+  'Wrapped Callbacks 2'
 );
 
 
@@ -86,7 +88,7 @@ function addSlowly(a, b) {
 }
 
 const slowPoke = timeFunction(addSlowly)(1, 2);
-assertEqual(slowPoke.value, 3);
+assertEqual(slowPoke.value, 3, 'Time Function');
 console.log(`the following number should be reasonably large: ${slowPoke.time}`);
 
 
@@ -127,12 +129,12 @@ function divider(n, d) {
 
 assertEqual(
   httpResponder(divider)(2, 1).status,
-  '200'
+  '200',
+  'Encase 1'
 );
 
 assertEqual(
   httpResponder(divider)(1, 0).status,
-  '500'
+  '500',
+  'Encase 2'
 );
-
-

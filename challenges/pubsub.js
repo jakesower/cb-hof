@@ -67,17 +67,20 @@ ps.publish('home');
 
 assertEqual(
   adder.getSum(),
-  3
+  3,
+  'Pubsub 1'
 );
 
 assertEqual(
   appender.messages,
-  ['phone', 'home']
+  ['phone', 'home'],
+  'Pubsub 2'
 );
 
 assertEqual(
   adder2.getSum(),
-  1
+  1,
+  'Pubsub 3'
 );
 
 
@@ -106,17 +109,20 @@ hotps.publish('home');
 
 assertEqual(
   hotAdder.getSum(),
-  3
+  3,
+  'Hot Pubsub 1'
 );
 
 assertEqual(
   hotAppender.messages,
-  ['E.T.', 'phone', 'home']
+  ['E.T.', 'phone', 'home'],
+  'Hot Pubsub 2'
 );
 
 assertEqual(
   hotAdder2.getSum(),
-  3
+  3,
+  'Hot Pubsub 3'
 );
 
 
@@ -148,20 +154,24 @@ singps.publish('home');
 
 assertEqual(
   singAdder.getSum(),
-  1
+  1,
+  'Singular Pubsub 1'
 );
 
 assertEqual(
   singAppender.messages,
-  ['E.T.']
+  ['E.T.'],
+  'Singular Pubsub 2'
 );
 
 assertEqual(
   singAdder2.getSum(),
-  1
+  1,
+  'Singular Pubsub 3'
 );
 
 assertEqual(
   singAppender2.messages,
-  ['E.T.']
+  ['E.T.'],
+  'Singular Pubsub 4'
 );

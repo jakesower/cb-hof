@@ -2,7 +2,7 @@ const assertEqual = require('./lib/assert-equal');
 
 /**
  * Reduce is the most powerful of the higher order functions. All of the other
- * other HOFs can be implemented using reduce.
+ * other HOFs that we cover can be implemented using reduce.
  *
  * Examples:
  *
@@ -44,18 +44,21 @@ function reduce(list, initialValue, reducer) {
 const add = (a, b) => a + b;
 assertEqual(
   reduce([1, 2, 3, 4], 0, add),
-  10
+  10,
+  'Reduce 1'
 );
 
 const maximum = (a, b) => (a > b) ? a : b;
 assertEqual(
   reduce([1, 2, 4, 3], -Infinity, maximum),
-  4
+  4,
+  'Reduce 2'
 );
 
 assertEqual(
   reduce([1, 2, 4, 3], 15, maximum),
-  15
+  15,
+  'Reduce 3'
 );
 
 
@@ -63,8 +66,9 @@ assertEqual(
 // concatenated together. Use reduce to do so.
 // Example: ['a', 'b', 'c'] -> 'abc'
 assertEqual(
-  false,
-  true
+  'please change me',
+  'to the test described above',
+  'Reduce 4'
 );
 
 
