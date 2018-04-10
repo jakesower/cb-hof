@@ -4,51 +4,11 @@ const assertEqual = require('../lib/assert-equal');
  * Functions can be used to wrap other functions to act as interfaces over
  * other pieces of code. This set of challenges will showcase potential uses
  * for wrapper functions.
- *
- * It will use AWS lambda as an example, but there's no requirement to know
- * anything about lambda for these exercises.
  */
-
-/**
- * Challenge 1: Wrap a lambda callback into succeed and fail functions.
- * Context: AWS lambda functions have the following signature:
- * function (event, context, callback) { ... }
- * The callback argument is a function that is to be invoked once the lambda
- * has a result. The callback is invoked differently depending on if the
- * lambda's execution was successful:
- *
- * Successful execution: callback(null, successValue)
- * Failed execution: callback(failureValue)
- *
- * The goal is to make that interface less clunky by wrapping it.
- */
-function wrapLambdaCallback(callback) {
-  // return an object with two functions: success and fail
-  // calling succeed should invoke the callback in successful mode, while
-  // calling fail should invoke the callback in failure mode
-}
-
-function testCallback(err, value) {
-  return err ?
-    `failed with value: ${err}` :
-    `succeeded with value: ${value}`;
-}
-
-const wrappedCallbacks = wrapLambdaCallback(testCallback);
-assertEqual(
-  wrappedCallbacks.succeed('yay'),
-  'succeeded with value: yay',
-  'Wrapped Callbacks 1'
-);
-assertEqual(
-  wrappedCallbacks.fail('uh oh'),
-  'failed with value: uh oh',
-  'Wrapped Callbacks 2'
-);
 
 
 /**
- * Challenge 2: Time a function's execution.
+ * Challenge 1: Time a function's execution.
  *
  * The function should return an object like so:
  * {
@@ -93,13 +53,10 @@ console.log(`the following number should be reasonably large: ${slowPoke.time}`)
 
 
 /**
- * Challenge 3: Encase a function to make sure a value is always returned, even
- * if the wrapped function throws.
- */
-
-/**
- * Calls the function fn and returns its value unless it throws, at which point
- * the safety value is returned instead.
+ * Challenge 2: Encase
+ * Encase a function to make sure a value is always returned, even if the
+ * wrapped function throws. Calls the function fn and returns its value unless
+ * it throws, at which point the safety value is returned instead.
  */
 function encase(fn, safeReturn) {
 
@@ -137,4 +94,43 @@ assertEqual(
   httpResponder(divider)(1, 0).status,
   '500',
   'Encase 2'
+);
+
+
+/**
+ * Challenge 3: Wraped Callback
+ * A lambda callback into succeed and fail functions.
+ * Context: AWS lambda functions have the following signature:
+ * function (event, context, callback) { ... }
+ * The callback argument is a function that is to be invoked once the lambda
+ * has a result. The callback is invoked differently depending on if the
+ * lambda's execution was successful:
+ *
+ * Successful execution: callback(null, successValue)
+ * Failed execution: callback(failureValue)
+ *
+ * The goal is to make that interface less clunky by wrapping it.
+ */
+function wrapLambdaCallback(callback) {
+  // return an object with two functions: success and fail
+  // calling succeed should invoke the callback in successful mode, while
+  // calling fail should invoke the callback in failure mode
+}
+
+function testCallback(err, value) {
+  return err ?
+    `failed with value: ${err}` :
+    `succeeded with value: ${value}`;
+}
+
+const wrappedCallbacks = wrapLambdaCallback(testCallback);
+assertEqual(
+  wrappedCallbacks.succeed('yay'),
+  'succeeded with value: yay',
+  'Wrapped Callbacks 1'
+);
+assertEqual(
+  wrappedCallbacks.fail('uh oh'),
+  'failed with value: uh oh',
+  'Wrapped Callbacks 2'
 );
