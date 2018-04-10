@@ -30,13 +30,11 @@ function makeMultiplier(factor) {
 
 const quadrupler = makeMultiplier(4);
 assertEqual(
-  map([1, 2, 3], quadrupler),
+  [1, 2, 3].map(quadrupler),
   [4, 8, 12]
 );
 
 assertEqual(
-  map([1, 2, 3], makeMultiplier(5)),
+  [1, 2, 3].map(makeMultiplier(5)),
   [5, 10, 15]
 );
-
-

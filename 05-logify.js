@@ -11,9 +11,9 @@ const assertEqual = require('./lib/assert-equal');
  */
 
 function logify(logger, fn) {
-  return function () {
+  return function (...args) {
     logger.log('about to call a function');
-    const result = fn.apply(null, arguments);
+    const result = fn(...args);
     logger.log('called the function, got result');
     logger.log(result);
     return result;
