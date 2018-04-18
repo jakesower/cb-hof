@@ -6,54 +6,8 @@ const assertEqual = require('../lib/assert-equal');
  * for wrapper functions.
  */
 
-
 /**
- * Challenge 1: Time a function's execution.
- *
- * The function should return an object like so:
- * {
- *   value: (the value of running fn),
- *   time: (the number of milliseconds to run the fn)
- * }
- *
- * JS language hints:
- *
- * Date.now() will return the current time in epoch milliseconds
- * Calling fn.apply(null, arguments) inside a (non-arrow) function will call fn
- * with whatever arguments were passed to the containing function. Example:
- *
- * function identity(fn) {
- *   return function () {
- *     fn.apply(null, arguments);
- *   }
- * }
- *
- * That function will simply call fn with whatever arguments were passed in.
- */
-
-function timeFunction(fn) {
-
-}
-
-
-// please feel free to adjust this number--the bigger it is the longer the
-// function will take to run
-const slow = 100000000;
-function addSlowly(a, b) {
-  let j = 0;
-  for(i=0; i<slow; i+=1) {
-    j = j + i;
-  }
-  return a + b;
-}
-
-const slowPoke = timeFunction(addSlowly)(1, 2);
-assertEqual(slowPoke.value, 3, 'Time Function');
-console.log(`the following number should be reasonably large: ${slowPoke.time}`);
-
-
-/**
- * Challenge 2: Encase
+ * Challenge 1: Encase
  * Encase a function to make sure a value is always returned, even if the
  * wrapped function throws. Calls the function fn and returns its value unless
  * it throws, at which point the safety value is returned instead.
@@ -95,6 +49,40 @@ assertEqual(
   '500',
   'Encase 2'
 );
+
+/**
+ * Challenge 2: Time a function's execution.
+ *
+ * The function should return an object like so:
+ * {
+ *   value: (the value of running fn),
+ *   time: (the number of milliseconds to run the fn)
+ * }
+ *
+ * JS language hint:
+ * Date.now() will return the current time in epoch milliseconds
+ */
+
+function timeFunction(fn) {
+
+}
+
+
+// please feel free to adjust this number--the bigger it is the longer the
+// function will take to run
+const slow = 100000000;
+function addSlowly(a, b) {
+  let j = 0;
+  for(i=0; i<slow; i+=1) {
+    j = j + i;
+  }
+  return a + b;
+}
+
+const slowPoke = timeFunction(addSlowly)(1, 2);
+assertEqual(slowPoke.value, 3, 'Time Function');
+console.log(`the following number should be reasonably large: ${slowPoke.time}`);
+
 
 
 /**
