@@ -92,7 +92,24 @@ assertEqual(
 
 
 function hotPubsub() {
+  let listeners = [];
+  let messages = [];
 
+  function subscribe(fn) {
+    messages.forEach(fn);
+    listeners.push(fn);
+  }
+
+  function publish(msg) {
+    messages.push(msg);
+    listeners.forEach(fn => fn(msg));
+  }
+
+  // the returned functions will be able to use listeners
+  return {
+    subscribe: subscribe,
+    publish: publish,
+  };
 }
 
 const hotps = hotPubsub();
@@ -135,7 +152,31 @@ assertEqual(
  */
 
 function singularPubsub() {
+  let value;
+  let valueReceived = false;
+  let listeners = [];
 
+  function subscribe(fn) {
+    if (valueReceived) {
+      fn(value);
+    } else {
+      listeners.push(fn);
+    }
+  }
+
+  function publish(msg) {
+    if (!valueReceived) {
+      valueReceived = true;
+      value = msg;
+      listeners.forEach(fn => fn(msg));
+    }
+  }
+
+  // the returned functions will be able to use listeners
+  return {
+    subscribe: subscribe,
+    publish: publish,
+  };
 }
 
 const singps = singularPubsub();

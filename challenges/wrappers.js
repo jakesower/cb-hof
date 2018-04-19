@@ -13,7 +13,13 @@ const assertEqual = require('../lib/assert-equal');
  * it throws, at which point the safety value is returned instead.
  */
 function encase(fn, safeReturn) {
-
+  return function (...args) {
+    try {
+      return fn(...args);
+    } catch (err) {
+      return safeReturn;
+    }
+  }
 }
 
 
@@ -64,7 +70,14 @@ assertEqual(
  */
 
 function timeFunction(fn) {
-
+  return function (...args) {
+    const start = Date.now();
+    const value = fn(...args);
+    return {
+      value,
+      time: Date.now() - start
+    }
+  }
 }
 
 
@@ -100,9 +113,10 @@ console.log(`the following number should be reasonably large: ${slowPoke.time}`)
  * The goal is to make that interface less clunky by wrapping it.
  */
 function wrapLambdaCallback(callback) {
-  // return an object with two functions: success and fail
-  // calling succeed should invoke the callback in successful mode, while
-  // calling fail should invoke the callback in failure mode
+  return {
+    succeed: data => callback(null, data),
+    fail: callback
+  };
 }
 
 function testCallback(err, value) {

@@ -44,7 +44,8 @@ function withDefaults(defaults, fn) {
 }
 
 function getStar(country) {
-  // implement in terms of the above two functions
+  const defaults = { lastName: '¯\_(ツ)_/¯' };
+  return withDefaults(defaults, getStarAttr)(country);
 }
 
 // Test it:
@@ -66,8 +67,27 @@ assertEqual(
  * they have, sorted from most titles to fewest.
  */
 
+// Like the built in `Array.prototype.sort`, but doesn't modify the incoming
+// list. Not the most efficient implementation, but it'll do.
+function sortBy(list, fn) {
+  if (list.length === 0) {
+    return [];
+  }
+
+  const [head, ...tail] = list;
+  const smaller = tail.filter(v => fn(v, head) <= 0);
+  const bigger = tail.filter(v => fn(v, head) > 0);
+
+  return sortBy(smaller, fn).concat([head]).concat(sortBy(bigger, fn));
+}
+
+
 function showTitles() {
-  // ???
+  const countryList = Object.values(teamData);
+  const titlePairs = countryList.map(c => [c.name, c.titles.length]);
+  const sorted = sortBy(titlePairs, (a, b) => b[1] - a[1]);
+
+  return sorted.map(c => `${c[0]}: ${c[1]} titles`);
 }
 
 const correctOutput2 = [
@@ -101,42 +121,26 @@ function append(list1, list2) {
   return list1.concat(list2);
 }
 
-// Like the built in `Array.prototype.sort`, but doesn't modify the incoming
-// list. Not the most efficient implementation, but it'll do.
-function sortBy(list, fn) {
-  if (list.length === 0) {
-    return [];
-  }
-
-  const [head, ...tail] = list;
-  const smaller = tail.filter(v => fn(v, head) <= 0);
-  const bigger = tail.filter(v => fn(v, head) > 0);
-
-  return sortBy(smaller, fn).concat([head]).concat(sortBy(bigger, fn));
-}
-
 const correctOutput3 = 'GBBBGAAGBBG';
 
 // Functional approach 1
 function toLetterYearPair(team) {
-  // Create a pairs of letters and victory years.
-  // Example: argentina -> [['A', 1978], ['A', 1986]]
+  const letter = team.name[0];
+  return team.titles.map(year => [letter, year]);
 }
 
 function unnest(pairs) {      // ⭐ Important function! ⭐
-  // Takes an array of arrays and flattens into a single array, only removing
-  // one layer of nesting
-  // This one may be challenging to conceptualize, but it can be represented
-  // with append and another higher order function you're familiar with
-  // Example: [[1, 2], [3, 4]] -> [1, 2, 3, 4]
-  // Example: [[[1, 2], [3, 4], 5], [6]] -> [[1, 2], [3, 4], 5, 6]
+  return pairs.reduce(append, []);
 
 }
 
 function showVictoryLetters1() {
   const teamList = values(teamData);
-  const pairs = teamList.map(toLetterYearPair);
-  // ??? (hint: use unnest and the sortBy functions)
+  const teamPairs = teamList.map(toLetterYearPair);
+  const pairs = unnest(teamPairs);
+  const sorted = sortBy(pairs, (a, b) => a[1] - b[1]);
+
+  return sorted.map(p => p[0]);
 }
 
 // Functional approach 2
@@ -145,7 +149,10 @@ function chain(list, fn) {     // ⭐ Important function! ⭐
 }
 
 function showVictoryLetters2() {
-  // implement using chain and other functions
+  const pairs = chain(values(teamData), toLetterYearPair);
+  const sorted = sortBy(pairs, (a, b) => a[1] - b[1]);
+
+  return sorted.map(p => p[0]);
 }
 
 
